@@ -13,20 +13,29 @@ function EditMode(props: Props) {
     onFinishEditing,
   } = props;
 
-  const titleClasses = "text-lg font-bold mb-3 block";
-  const inputClasses = "w-full bg-white/10 p-2 rounded-lg";
+  const inputClasses =
+    "w-full bg-white/10 p-2 rounded-lg mb-5 focus:outline-none focus:bg-white focus:text-black";
+  const labelClasses = "mb-1 uppercase text-sm block opacity-70";
 
   return (
     <div>
+      <label htmlFor="title" className={labelClasses}>
+        Título:
+      </label>
       <input
-        className={twMerge("text-sm", titleClasses, inputClasses)}
+        id="title"
+        className={twMerge("text-sm", inputClasses)}
         type="text"
         placeholder="Titulo"
         defaultValue={title}
       />
-      <input
+      <label htmlFor="description" className={labelClasses}>
+        Descrição:
+      </label>
+      <textarea
+        id="description"
+        rows={5}
         className={twMerge("text-sm", inputClasses)}
-        type="text"
         placeholder="Descrição..."
         defaultValue={description}
       />
