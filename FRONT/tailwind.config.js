@@ -10,7 +10,8 @@ export default {
         'background': 'url(assets/images/background.jpg)'
       },
       colors: {
-        ada: '#181c23'
+        ada: '#181c23',
+        green: 'rgb(166, 247, 80)'
       }
     },
   },

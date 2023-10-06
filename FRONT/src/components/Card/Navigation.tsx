@@ -10,12 +10,8 @@ function Navigation(props: Props) {
   const { task } = props;
   const { tasks, update } = useAppContext();
 
-  console.log({ tasks });
-
-  function handleChangeList(direction: string) {
+  function handleChangeList(direction: "next" | "prev") {
     const updatedTodos = [...tasks];
-
-    console.log({ updatedTodos });
 
     let newList = "";
     if (direction === "next") {
@@ -32,12 +28,12 @@ function Navigation(props: Props) {
   }
 
   return (
-    <div className="h-0 overflow-hidden focus-within:overflow-none focus-within:h-12 transition-all group-hover:h-12 group-hover:overflow-none">
+    <div className="h-0 overflow-hidden focus-within:overflow-none focus-within:h-12 transition-all group-hover:overflow-none group-hover:h-12">
       <div className="flex flex-rox justify-between mt-2">
         {task.list !== "ToDo" && (
           <button
             onClick={() => handleChangeList("prev")}
-            className="bg-black hover:bg-white/50 transition-all rounded-full h-8 w-8 outline-none focus:bg-white/50 focus:text-white"
+            className="bg-black hover:bg-green transition-all rounded-full h-8 w-8 outline-none focus:bg-green focus:text-black hover:text-black"
           >
             ←{" "}
             <span className="sr-only">Mover {task.title} para a esquerda</span>
@@ -47,7 +43,7 @@ function Navigation(props: Props) {
           <>
             <button
               onClick={() => handleChangeList("next")}
-              className="bg-black hover:bg-white/50 transition-all rounded-full h-8 w-8 outline-none focus:bg-white/50 focus:text-white"
+              className="bg-black hover:bg-green transition-all rounded-full h-8 w-8 outline-none focus:bg-green focus:text-black hover:text-black"
             >
               →{" "}
               <span className="sr-only">

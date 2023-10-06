@@ -34,16 +34,18 @@ function App() {
   }
 
   return (
-    <>
+    <div className="p-5">
       <img
         src="https://ada-site-frontend.s3.sa-east-1.amazonaws.com/home/header-logo.svg"
-        alt=""
+        alt="Logo Ada"
+        className="mb-10 block"
       />
-      <div className="flex gap-5 p-5">
+      <div className="flex gap-5" role="list">
         <div
           className="flex-1"
           onDrop={(e) => onDrop(e, "ToDo")}
           onDragOver={(e) => e.preventDefault()}
+          role="listitem"
         >
           <h2 className="mb-5 text-white text-xl font-extrabold">A Fazer</h2>
           {todos
@@ -89,7 +91,7 @@ function App() {
             ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
