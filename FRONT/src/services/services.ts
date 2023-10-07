@@ -22,7 +22,7 @@ export async function getToken() {
   token = await response.json();
 }
 
-export async function createTask() {
+export async function createTask(column: "ToDo" | "Doing" | "Done" = "ToDo") {
   await getToken();
 
   const headersLocal = {
@@ -34,9 +34,9 @@ export async function createTask() {
     method: "POST",
     headers: headersLocal,
     body: JSON.stringify({
-      titulo: "Task " + Date.now(),
-      conteudo: "novo card " + Date.now(),
-      lista: "ToDo",
+      titulo: "Nova tarefa " + Date.now(),
+      conteudo: "Descrição",
+      lista: column,
     }),
   });
 

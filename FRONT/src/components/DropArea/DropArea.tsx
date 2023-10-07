@@ -20,7 +20,7 @@ function DropArea(props: Props) {
   return (
     <div
       className={twMerge(
-        "h-[15px] border-2 border-dashed rounded-lg my-2 only:h-[100%!important] transition-all",
+        "h-[15px] border-2 border-dashed rounded-lg my-2 only:h-[70%!important] transition-all",
         isVisible
           ? "border-white/50 h-[200px]"
           : "bg-transparent border-transparent"

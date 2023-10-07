@@ -4,8 +4,10 @@ import { useAppContext } from "../../AppContext";
 import { useTransition } from "../../hooks/useViewTransition";
 import Card from "../Card/Card";
 import DropArea from "../DropArea/DropArea";
-import React, { useId } from "react";
-import { updateTask } from "../../services/services";
+import React from "react";
+import { createTask, updateTask } from "../../services/services";
+import TextButton from "../TextButton/TextButton";
+import { queryClient } from "../../main";
 
 interface Props {
   title: string;
@@ -57,6 +59,12 @@ function Column(props: Props) {
     event.dataTransfer!.setData("task", task.id);
   }
 
+  function createNewTask(column) {
+    createTask(column).then(() =>
+      queryClient.invalidateQueries({ queryKey: ["tasks"] })
+    );
+  }
+
   return (
     <div
       className="flex-1 bg-white/5 p-4 rounded-lg"
@@ -77,6 +85,11 @@ function Column(props: Props) {
               <DropArea onDrop={(e: DragEvent) => onDrop(e, id, index + 1)} />
             </React.Fragment>
           ))}
+      </div>
+      <div className="flex justify-center">
+        <TextButton onClick={() => createNewTask(id)} className="text-white">
+          Criar nova tarefa
+        </TextButton>
       </div>
     </div>
   );
