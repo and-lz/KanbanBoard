@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { Task } from "../../App";
 import { useAppContext } from "../../AppContext";
+import { useViewTransition } from "../../hooks/useViewTransition";
 
 interface Props {
   task: Task;
@@ -24,17 +25,17 @@ function Navigation(props: Props) {
     }
 
     updatedTodos.find((todo) => todo.id === task.id)!.list = newList;
-    update({ tasks: updatedTodos });
+    useViewTransition(() => update({ tasks: updatedTodos }));
   }
 
+  const classes =
+    "bg-black hover:bg-green text-2xl transition-all rounded-full h-10 w-10 outline-none focus:bg-green focus:text-black hover:text-black";
+
   return (
-    <div className="h-0 overflow-hidden focus-within:overflow-none focus-within:h-12 transition-all group-hover:overflow-none group-hover:h-12">
+    <div className="mt-5 h-0 overflow-hidden focus-within:overflow-none focus-within:h-12 transition-all group-hover:overflow-none group-hover:h-12">
       <div className="flex flex-rox justify-between mt-2">
         {task.list !== "ToDo" && (
-          <button
-            onClick={() => handleChangeList("prev")}
-            className="bg-black hover:bg-green transition-all rounded-full h-8 w-8 outline-none focus:bg-green focus:text-black hover:text-black"
-          >
+          <button onClick={() => handleChangeList("prev")} className={classes}>
             ←{" "}
             <span className="sr-only">Mover {task.title} para a esquerda</span>
           </button>
@@ -43,7 +44,7 @@ function Navigation(props: Props) {
           <>
             <button
               onClick={() => handleChangeList("next")}
-              className="bg-black hover:bg-green transition-all rounded-full h-8 w-8 outline-none focus:bg-green focus:text-black hover:text-black"
+              className={classes}
             >
               →{" "}
               <span className="sr-only">

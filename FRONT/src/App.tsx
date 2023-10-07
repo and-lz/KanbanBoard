@@ -2,6 +2,8 @@ import { DragEvent } from "react";
 import { useAppContext } from "./AppContext";
 import Card from "./components/Card/Card";
 import { todos } from "./data";
+import { useViewTransition } from "./hooks/useViewTransition";
+import { flushSync } from "react-dom";
 
 export enum List {
   ToDo = "ToDo",
@@ -22,11 +24,11 @@ function App() {
   function handleChangeList(id: string, newColumn: string) {
     const newTasks = [...tasks];
     newTasks.find((todo) => todo.id === id)!.list = newColumn;
-    update({ tasks: newTasks });
+    flushSync(() => update({ tasks: newTasks }));
   }
   function onDrop(event: DragEvent, targetColumn: string) {
     const task = event.dataTransfer.getData("task");
-    handleChangeList(task, targetColumn);
+    useViewTransition(() => handleChangeList(task, targetColumn));
   }
 
   function onDragStart(e: DragEvent, task: Task) {
