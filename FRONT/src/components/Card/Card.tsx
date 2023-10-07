@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { Task } from "../../App";
 import Navigation from "./Navigation";
 import EditMode from "./EditMode";
-import { useViewTransition } from "../../hooks/useViewTransition";
+import { useTransition } from "../../hooks/useViewTransition";
 
 interface Props {
   task: Task;
@@ -23,7 +23,7 @@ function Card(props: Props) {
         style={{ viewTransitionName: "card-" + task.id }}
         onDragStart={onDragStart}
         className={twMerge(
-          "card bg-black/80 hover:bg-black rounded-lg p-3 mb-4 hover:shadow-lg transition-all group text-white border-2 border-transparent focus-within:border-green"
+          "card cursor-grab active:animate-pulse active:cursor-grab bg-black/80 hover:bg-black rounded-lg p-3 hover:shadow-lg transition-all group text-white border-2 border-transparent focus-within:border-green"
         )}
       >
         {!editMode && (
@@ -38,7 +38,7 @@ function Card(props: Props) {
         {editMode && (
           <EditMode
             task={task}
-            onFinishEditing={() => useViewTransition(() => setEditMode(false))}
+            onFinishEditing={() => useTransition(() => setEditMode(false))}
           />
         )}
         {!editMode && <Navigation task={task} />}

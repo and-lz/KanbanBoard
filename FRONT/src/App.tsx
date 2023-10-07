@@ -2,7 +2,7 @@ import { DragEvent } from "react";
 import { useAppContext } from "./AppContext";
 import Card from "./components/Card/Card";
 import { todos } from "./data";
-import { useViewTransition } from "./hooks/useViewTransition";
+import { useTransition } from "./hooks/useViewTransition";
 import { flushSync } from "react-dom";
 import Column from "./components/Column/Column";
 
@@ -28,9 +28,9 @@ function App() {
         className="mb-10 block"
       />
       <div className="flex gap-5" role="list">
-        <Column list="ToDo" />
-        <Column list="Doing" />
-        <Column list="Done" />
+        <Column title="A fazer" id="ToDo" />
+        <Column title="Fazendo" id="Doing" />
+        <Column title="Feito" id="Done" />
       </div>
     </div>
   );
