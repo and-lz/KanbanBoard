@@ -1,9 +1,9 @@
-import { useId, useRef, useState } from "react";
+import { useId, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Task } from "../../App";
-import Navigation from "./Navigation";
-import EditMode from "./EditMode";
 import { useTransition } from "../../hooks/useViewTransition";
+import EditMode from "./EditMode";
+import Navigation from "./Navigation";
 
 interface Props {
   task: Task;
@@ -13,7 +13,7 @@ interface Props {
 
 function Card(props: Props) {
   const { task, isEditing, onDragStart } = props;
-  const { title, description } = task;
+  const { titulo, conteudo } = task;
   const [editMode, setEditMode] = useState(isEditing);
   return (
     <>
@@ -31,8 +31,8 @@ function Card(props: Props) {
             className="cursor-pointer focus:outline-none w-full text-left"
             onClick={() => setEditMode(true)}
           >
-            <span className="text-lg font-bold mb-3 block">{title}</span>
-            <p className="text-sm opacity-60">{description}</p>
+            <span className="text-lg font-bold mb-3 block">{titulo}</span>
+            <p className="text-sm opacity-60">{conteudo}</p>
           </button>
         )}
         {editMode && (

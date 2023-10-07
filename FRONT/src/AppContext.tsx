@@ -1,8 +1,15 @@
 "use client";
 
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Task } from "./App";
-import { todos } from "./data";
+import { useQuery } from "@tanstack/react-query";
+import { getTasks } from "./services/services";
 
 export interface AppContext {
   tasks: Task[];
@@ -10,7 +17,7 @@ export interface AppContext {
 }
 
 let initialContext: AppContext = {
-  tasks: todos,
+  tasks: [],
   update: () => {},
 };
 
@@ -28,6 +35,16 @@ function AppProvider({ children }: { children: ReactNode }) {
     setContext((oldContext) => ({ ...oldContext, ...context }));
   };
 
+  const { isLoading, data } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: getTasks,
+  });
+
+  useEffect(() => {
+    if (isLoading) return;
+    update({ tasks: data });
+  }, [data]);
+
   return (
     <AppContext.Provider value={{ ...context, update }}>
       {children}
@@ -36,3 +53,4 @@ function AppProvider({ children }: { children: ReactNode }) {
 }
 
 export default AppProvider;
+``;

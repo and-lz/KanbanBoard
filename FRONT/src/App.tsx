@@ -1,9 +1,3 @@
-import { DragEvent } from "react";
-import { useAppContext } from "./AppContext";
-import Card from "./components/Card/Card";
-import { todos } from "./data";
-import { useTransition } from "./hooks/useViewTransition";
-import { flushSync } from "react-dom";
 import Column from "./components/Column/Column";
 
 export enum List {
@@ -14,9 +8,9 @@ export enum List {
 
 export interface Task {
   id: string;
-  title: string;
-  list: string;
-  description: string;
+  titulo: string;
+  lista: string;
+  conteudo: string;
 }
 
 function App() {

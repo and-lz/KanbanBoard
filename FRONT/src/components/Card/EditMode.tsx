@@ -9,7 +9,7 @@ interface Props {
 
 function EditMode(props: Props) {
   const {
-    task: { title, description },
+    task: { titulo, conteudo },
     onFinishEditing,
   } = props;
 
@@ -27,7 +27,7 @@ function EditMode(props: Props) {
         className={twMerge("text-sm", inputClasses)}
         type="text"
         placeholder="Titulo"
-        defaultValue={title}
+        defaultValue={titulo}
       />
       <label htmlFor="description" className={labelClasses}>
         Descrição:
@@ -37,7 +37,7 @@ function EditMode(props: Props) {
         rows={5}
         className={twMerge("text-sm", inputClasses)}
         placeholder="Descrição..."
-        defaultValue={description}
+        defaultValue={conteudo}
       />
       <div className="flex justify-end">
         <TextButton onClick={onFinishEditing} className="mt-5">
