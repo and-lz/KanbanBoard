@@ -67,11 +67,13 @@ function Column(props: Props) {
 
   return (
     <div
-      className="flex-1 bg-white/5 p-4 rounded-lg"
+      className="flex-1 bg-black/10 p-4 rounded-lg shadow-inner"
       onDragOver={(e) => e.preventDefault()}
     >
-      <h2 className="mb-5 text-white text-xl font-extrabold">{title}</h2>
-      <div className="h-full">
+      <h2 className="mb-5 overflow-auto text-white text-xl font-extrabold">
+        {title}
+      </h2>
+      <div className="h-[70vh] overflow-auto">
         <DropArea onDrop={(e: DragEvent) => onDrop(e, id, 0)} />
         {tasks
           .filter((todo) => todo.lista === id)
@@ -86,7 +88,7 @@ function Column(props: Props) {
             </React.Fragment>
           ))}
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-3">
         <TextButton onClick={() => createNewTask(id)} className="text-white">
           Criar nova tarefa
         </TextButton>

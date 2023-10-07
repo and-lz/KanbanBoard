@@ -22,7 +22,7 @@ function DropArea(props: Props) {
       className={twMerge(
         "h-[15px] border-2 border-dashed rounded-lg my-2 only:h-[70%!important] transition-all",
         isVisible
-          ? "border-white/50 h-[200px]"
+          ? "border-white/20 h-[200px]"
           : "bg-transparent border-transparent"
       )}
       onDragEnter={showArea}

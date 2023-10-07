@@ -21,7 +21,7 @@ function Card(props: Props) {
       draggable
       onDragStart={onDragStart}
       className={twMerge(
-        "card cursor-grab active:animate-pulse active:cursor-grab bg-black/80 hover:bg-black rounded-lg p-3 hover:shadow-lg transition-all group text-white border-2 border-transparent focus-within:border-green"
+        "card min-w-[400px] cursor-grab active:animate-pulse active:cursor-grab bg-black/80 hover:bg-black rounded-lg p-3 hover:shadow-lg transition-all group text-white border-2 border-transparent focus-within:border-green"
       )}
       style={{ viewTransitionName: "card-" + task.id }}
     >

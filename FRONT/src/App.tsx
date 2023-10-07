@@ -1,6 +1,5 @@
 import Column from "./components/Column/Column";
-
-
+import { List } from "./services/types";
 
 function App() {
   return (
@@ -10,10 +9,10 @@ function App() {
         alt="Logo Ada"
         className="mb-10 block"
       />
-      <div className="flex gap-5" role="list">
-        <Column title="A fazer" id="ToDo" />
-        <Column title="Fazendo" id="Doing" />
-        <Column title="Feito" id="Done" />
+      <div className="flex gap-5 scroll-smooth" role="list">
+        <Column title="A fazer" id={List.ToDo} />
+        <Column title="Fazendo" id={List.Doing} />
+        <Column title="Feito" id={List.Done} />
       </div>
     </div>
   );
