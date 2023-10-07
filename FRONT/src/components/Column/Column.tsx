@@ -4,7 +4,8 @@ import { useAppContext } from "../../AppContext";
 import { useTransition } from "../../hooks/useViewTransition";
 import Card from "../Card/Card";
 import DropArea from "../DropArea/DropArea";
-import React from "react";
+import React, { useId } from "react";
+import { updateTask } from "../../services/services";
 
 interface Props {
   title: string;
@@ -32,11 +33,16 @@ function Column(props: Props) {
   const { id, title } = props;
   const { tasks, update } = useAppContext();
 
-  console.log({ tasks });
-
   function onDrop(event: DragEvent, targetColumn: string, newIndex: number) {
-    const task = event.dataTransfer!.getData("task");
-    useTransition(() => handleChangeList(task, targetColumn, newIndex));
+    const taskId = event.dataTransfer!.getData("task");
+    const task = tasks.find((task) => task.id === taskId)!;
+
+    updateTask(taskId, {
+      ...task,
+      lista: targetColumn,
+    }).then(() => {
+      useTransition(() => handleChangeList(taskId, targetColumn, newIndex));
+    });
   }
 
   function handleChangeList(id: string, newColumn: string, newIndex: number) {
@@ -55,6 +61,7 @@ function Column(props: Props) {
     <div
       className="flex-1 bg-white/5 p-4 rounded-lg"
       onDragOver={(e) => e.preventDefault()}
+      style={{ viewTransitionName: "column-" + useId() }}
     >
       <h2 className="mb-5 text-white text-xl font-extrabold">{title}</h2>
       <div className="h-full">

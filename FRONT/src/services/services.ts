@@ -1,3 +1,5 @@
+import { Task } from "../App";
+
 let token = "";
 
 let URL = "http://localhost:4000";
@@ -54,4 +56,19 @@ export async function getTasks() {
   });
 
   return await response.json();
+}
+
+export async function updateTask(uuid: string, body: Task) {
+  await getToken();
+
+  const headersLocal = {
+    ...headers,
+    Authorization: "Bearer " + token,
+  };
+
+  return fetch(`${URL}/cards/${uuid}`, {
+    method: "PUT",
+    headers: headersLocal,
+    body: JSON.stringify(body),
+  });
 }

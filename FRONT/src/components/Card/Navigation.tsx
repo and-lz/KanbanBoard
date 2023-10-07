@@ -1,6 +1,7 @@
 import { Task } from "../../App";
 import { useAppContext } from "../../AppContext";
 import { useTransition } from "../../hooks/useViewTransition";
+import { updateTask } from "../../services/services";
 
 interface Props {
   task: Task;
@@ -15,15 +16,21 @@ function Navigation(props: Props) {
 
     let newList = "";
     if (direction === "next") {
-      if (task.list === "ToDo") newList = "Doing";
-      if (task.list === "Doing") newList = "Done";
+      if (task.lista === "ToDo") newList = "Doing";
+      if (task.lista === "Doing") newList = "Done";
     }
     if (direction === "prev") {
-      if (task.list === "Done") newList = "Doing";
-      if (task.list === "Doing") newList = "ToDo";
+      if (task.lista === "Done") newList = "Doing";
+      if (task.lista === "Doing") newList = "ToDo";
     }
 
-    updatedTodos.find((todo) => todo.id === task.id)!.list = newList;
+    updatedTodos.find((todo) => todo.id === task.id)!.lista = newList;
+
+    updateTask(task.id, {
+      ...task,
+      lista: newList,
+    });
+
     useTransition(() => update({ tasks: updatedTodos }));
   }
 
@@ -34,13 +41,13 @@ function Navigation(props: Props) {
     <div className="mt-5 h-0 overflow-hidden focus-within:overflow-none focus-within:h-12 transition-all">
       {/* group-hover:overflow-none group-hover:h-12 */}
       <div className="flex flex-rox justify-between mt-2">
-        {task.list !== "ToDo" && (
+        {task.lista !== "ToDo" && (
           <button onClick={() => handleChangeList("prev")} className={classes}>
             ←{" "}
-            <span className="sr-only">Mover {task.title} para a esquerda</span>
+            <span className="sr-only">Mover {task.titulo} para a esquerda</span>
           </button>
         )}
-        {task.list !== "Done" && (
+        {task.lista !== "Done" && (
           <>
             <button
               onClick={() => handleChangeList("next")}
@@ -48,7 +55,7 @@ function Navigation(props: Props) {
             >
               →{" "}
               <span className="sr-only">
-                Mover {task.title} para próxima coluna
+                Mover {task.titulo} para próxima coluna
               </span>
             </button>
           </>
