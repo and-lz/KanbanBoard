@@ -6,4 +6,5 @@
     font-family: 'Fira Code', monospace;
     font-variant-ligatures: common-ligatures;
     letter-spacing: -.02em;
+    box-sizing: border-box;
 }

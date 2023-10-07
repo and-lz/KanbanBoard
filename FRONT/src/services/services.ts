@@ -72,3 +72,17 @@ export async function updateTask(uuid: string, body: Task) {
     body: JSON.stringify(body),
   });
 }
+
+export async function deleteTask(uuid: string) {
+  await getToken();
+
+  const headersLocal = {
+    ...headers,
+    Authorization: "Bearer " + token,
+  };
+
+  return fetch(`${URL}/cards/${uuid}`, {
+    method: "DELETE",
+    headers: headersLocal,
+  });
+}

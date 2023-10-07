@@ -61,7 +61,6 @@ function Column(props: Props) {
     <div
       className="flex-1 bg-white/5 p-4 rounded-lg"
       onDragOver={(e) => e.preventDefault()}
-      style={{ viewTransitionName: "column-" + useId() }}
     >
       <h2 className="mb-5 text-white text-xl font-extrabold">{title}</h2>
       <div className="h-full">

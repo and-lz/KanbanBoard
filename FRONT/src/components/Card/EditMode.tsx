@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { Task } from "../../App";
 import TextButton from "../TextButton/TextButton";
-import { updateTask } from "../../services/services";
+import { deleteTask, updateTask } from "../../services/services";
 import { useRef } from "react";
 import { queryClient } from "../../main";
 
@@ -27,6 +27,13 @@ function EditMode(props: Props) {
     });
     queryClient.invalidateQueries({ queryKey: ["tasks"] });
     onFinishEditing();
+  }
+
+  function onDelete() {
+    deleteTask(task.id).then(() => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      onFinishEditing();
+    });
   }
 
   return (
@@ -58,6 +65,9 @@ function EditMode(props: Props) {
       <div className="flex justify-between">
         <TextButton onClick={onFinishEditing} className="mt-5">
           Cancelar
+        </TextButton>
+        <TextButton onClick={onDelete} className="mt-5">
+          Apagar
         </TextButton>
         <TextButton onClick={onSave} className="mt-5">
           Salvar
