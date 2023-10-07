@@ -1,5 +1,4 @@
 import { flushSync } from "react-dom";
-import { Task } from "../../App";
 import { useAppContext } from "../../AppContext";
 import { useTransition } from "../../hooks/useViewTransition";
 import Card from "../Card/Card";
@@ -8,10 +7,11 @@ import React from "react";
 import { createTask, updateTask } from "../../services/services";
 import TextButton from "../TextButton/TextButton";
 import { queryClient } from "../../main";
+import { List, Task } from "../../services/types";
 
 interface Props {
   title: string;
-  id: "ToDo" | "Doing" | "Done";
+  id: List;
 }
 
 function moveItemInArray<T>(arr: T[], fromIndex: number, toIndex: number): T[] {
@@ -59,7 +59,7 @@ function Column(props: Props) {
     event.dataTransfer!.setData("task", task.id);
   }
 
-  function createNewTask(column) {
+  function createNewTask(column: List) {
     createTask(column).then(() =>
       queryClient.invalidateQueries({ queryKey: ["tasks"] })
     );

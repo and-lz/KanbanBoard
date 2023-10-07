@@ -7,9 +7,9 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Task } from "./App";
 import { useQuery } from "@tanstack/react-query";
 import { getTasks } from "./services/services";
+import { Task } from "./services/types";
 
 export interface AppContext {
   tasks: Task[];

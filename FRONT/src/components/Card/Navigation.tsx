@@ -1,7 +1,7 @@
-import { Task } from "../../App";
 import { useAppContext } from "../../AppContext";
 import { useTransition } from "../../hooks/useViewTransition";
 import { updateTask } from "../../services/services";
+import { List, Task } from "../../services/types";
 
 interface Props {
   task: Task;
@@ -16,12 +16,12 @@ function Navigation(props: Props) {
 
     let newList = "";
     if (direction === "next") {
-      if (task.lista === "ToDo") newList = "Doing";
-      if (task.lista === "Doing") newList = "Done";
+      if (task.lista === List.ToDo) newList = List.Doing;
+      if (task.lista === List.Doing) newList = List.Done;
     }
     if (direction === "prev") {
-      if (task.lista === "Done") newList = "Doing";
-      if (task.lista === "Doing") newList = "ToDo";
+      if (task.lista === List.Done) newList = List.Doing;
+      if (task.lista === List.Doing) newList = List.ToDo;
     }
 
     updatedTodos.find((todo) => todo.id === task.id)!.lista = newList;
@@ -47,7 +47,7 @@ function Navigation(props: Props) {
             <span className="sr-only">Mover {task.titulo} para a esquerda</span>
           </button>
         )}
-        {task.lista !== "Done" && (
+        {task.lista !== List.Done && (
           <>
             <button
               onClick={() => handleChangeList("next")}

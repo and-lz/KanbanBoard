@@ -1,4 +1,4 @@
-import { Task } from "../App";
+import { List, Task } from "./types";
 
 let token = "";
 
@@ -22,7 +22,7 @@ export async function getToken() {
   token = await response.json();
 }
 
-export async function createTask(column: "ToDo" | "Doing" | "Done" = "ToDo") {
+export async function createTask(column: List = List.ToDo) {
   await getToken();
 
   const headersLocal = {
@@ -40,7 +40,7 @@ export async function createTask(column: "ToDo" | "Doing" | "Done" = "ToDo") {
     }),
   });
 
-  const data = await response.json();
+  return await response.json();
 }
 
 export async function getTasks() {
