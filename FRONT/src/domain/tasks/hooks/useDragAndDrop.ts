@@ -1,11 +1,12 @@
 import { useAppContext } from "../../../AppContext";
 import { moveItemInArray } from "../components/Column/helper";
-import { updateTask } from "../services/services";
 import { Task } from "../services/types";
+import { useTaskManager } from "./useTaskManager";
 import { useTransition } from "./useViewTransition";
 
 export function useDragAndDrop() {
-  const { tasks, update } = useAppContext();
+  const { tasks, update: updateContext } = useAppContext();
+  const { update } = useTaskManager();
   function moveTaskToListAndIndex(
     id: string,
     newColumn: string,
@@ -15,7 +16,7 @@ export function useDragAndDrop() {
     const index = newTasks.findIndex((todo) => todo.id === id);
     newTasks[index].lista = newColumn;
     moveItemInArray(newTasks, index, newIndex);
-    update({ tasks: newTasks });
+    updateContext({ tasks: newTasks });
   }
 
   async function onDrop(
@@ -25,10 +26,11 @@ export function useDragAndDrop() {
   ) {
     const task: Task = JSON.parse(event.dataTransfer!.getData("task"));
 
-    await updateTask(task.id, {
+    await update(task.id, {
       ...task,
       lista: targetColumn,
     });
+    updateContext({ toast: `${task.titulo} movida para ${targetColumn}` });
     useTransition(() =>
       moveTaskToListAndIndex(task.id, targetColumn, newIndex)
     );

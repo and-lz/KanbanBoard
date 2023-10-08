@@ -1,8 +1,7 @@
 import React from "react";
 import { useAppContext } from "../../../../AppContext";
-import { queryClient } from "../../../../main";
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
-import { createTask } from "../../services/services";
+import { useTaskManager } from "../../hooks/useTaskManager";
 import { List } from "../../services/types";
 import Card from "../Card/Card";
 import DropArea from "../DropArea/DropArea";
@@ -18,11 +17,7 @@ function Column(props: Props) {
   const { id, title, showAddTaskButton = false } = props;
   const { tasks } = useAppContext();
   const { onDrop, onDragStart, onDragOver } = useDragAndDrop();
-
-  async function createNewTask(column: List) {
-    await createTask(column);
-    queryClient.invalidateQueries({ queryKey: ["tasks"] });
-  }
+  const { createTaskInColumn } = useTaskManager();
 
   return (
     <div
@@ -50,7 +45,10 @@ function Column(props: Props) {
       </div>
       {showAddTaskButton && (
         <div className="flex justify-center mt-3">
-          <TextButton onClick={() => createNewTask(id)} className="text-white">
+          <TextButton
+            onClick={async () => await createTaskInColumn(id)}
+            className="text-white"
+          >
             Criar nova tarefa
           </TextButton>
         </div>

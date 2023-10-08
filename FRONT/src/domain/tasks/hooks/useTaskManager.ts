@@ -1,12 +1,11 @@
 import { useAppContext } from "../../../AppContext";
 import { queryClient } from "../../../main";
-import { deleteTask, updateTask } from "../services/services";
+import { createTask, deleteTask, updateTask } from "../services/services";
 import { List, Task } from "../services/types";
 
 const ERROR_MESSAGE = "Não foi possível realizar a ação solicitada";
 
-export function useTaskManager(task: Task) {
-  const { id } = task;
+export function useTaskManager() {
   const { update: updateContext } = useAppContext();
 
   async function tryAndCatchWithErrorMessage(functionToTry: Function) {
@@ -17,25 +16,28 @@ export function useTaskManager(task: Task) {
     }
   }
 
-  async function update(data: Partial<Task>) {
+  async function update(id: string, task: Task) {
+    if (!task) return;
+
     tryAndCatchWithErrorMessage(async () => {
       await updateTask(id, {
         ...task,
-        ...data,
       });
       updateContext({ toast: `${task.titulo} foi atualizada.` });
       await queryClient.invalidateQueries({ queryKey: ["tasks"] });
     });
   }
 
-  async function remove() {
+  async function remove(taskId: string) {
     tryAndCatchWithErrorMessage(async () => {
-      await deleteTask(id);
+      await deleteTask(taskId);
       await queryClient.invalidateQueries({ queryKey: ["tasks"] });
     });
   }
 
-  function moveTo(direction: "next" | "prev") {
+  function moveTo(task: Task, direction: "next" | "prev") {
+    if (!task) return;
+
     tryAndCatchWithErrorMessage(async () => {
       let newList = "";
       if (direction === "next") {
@@ -46,12 +48,23 @@ export function useTaskManager(task: Task) {
         if (task.lista === List.Done) newList = List.Doing;
         if (task.lista === List.Doing) newList = List.ToDo;
       }
-      await update({
+      await update(task.id, {
+        id: task.id,
+        titulo: task.titulo,
+        conteudo: task.conteudo,
         lista: newList,
       });
       updateContext({ toast: `${task.titulo} foi movida para ${newList}` });
     });
   }
 
-  return { update, remove, moveTo };
+  async function createTaskInColumn(column: List) {
+    tryAndCatchWithErrorMessage(async () => {
+      await createTask(column);
+      updateContext({ toast: `Nova tarefa criada.` });
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    });
+  }
+
+  return { update, remove, moveTo, createTaskInColumn };
 }

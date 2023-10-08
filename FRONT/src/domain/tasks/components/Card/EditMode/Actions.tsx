@@ -10,20 +10,22 @@ interface Props {
 
 function Actions(props: Props) {
   const { task, onFinishEditing, formRef } = props;
-  const { update, remove } = useTaskManager(task);
+  const { update, remove } = useTaskManager();
 
   return (
     <div className="flex justify-between">
       <TextButton onClick={onFinishEditing} className="mt-5">
         Cancelar
       </TextButton>
-      <TextButton onClick={remove} className="mt-5">
+      <TextButton onClick={() => remove(task.id)} className="mt-5">
         Apagar
       </TextButton>
       <TextButton
         onClick={async () => {
           const data = new FormData(formRef.current);
-          await update({
+          await update(task.id, {
+            id: task.id,
+            lista: task.lista,
             titulo: String(data.get("titulo")),
             conteudo: String(data.get("conteudo")),
           });

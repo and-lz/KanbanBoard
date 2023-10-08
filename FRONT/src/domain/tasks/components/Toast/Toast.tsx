@@ -37,12 +37,12 @@ const Toast = () => {
       <button onClick={handleClick}>
         <div
           className={twMerge(
-            "fixed bottom-5 right-5 z-50 bg-white/50 p-3 px-5 shadow-2xl backdrop-blur-3xl transition-all hover:bg-white md:m-0",
+            "fixed bottom-5 right-5 z-50 bg-black rounded-lg p-2 px-5 shadow-2xl backdrop-blur-3xl transition-all md:m-0 text-white",
             visible ? "translate-y-[0%]" : "translate-y-[150%]"
           )}
         >
           <div className="flex items-center gap-2">
-            <span className="text-lg">{toast}</span>
+            <span className="text-md">{toast}</span>
           </div>
         </div>
       </button>
