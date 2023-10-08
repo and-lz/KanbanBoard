@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { useAppContext } from "../../../../AppContext";
 
 const Toast = () => {
-  let [visible, setVisible] = useState(false);
+  let [visible, setVisible] = useState(true);
   const { toast } = useAppContext();
 
   useEffect(() => {
@@ -27,10 +27,10 @@ const Toast = () => {
       <div
         style={{
           background:
-            "linear-gradient(330deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.53125) 20%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0) 50%)",
+            "linear-gradient(330deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.53125) 10%, rgba(0,0,0,0.1) 20%, rgba(0,0,0,0) 40%)",
         }}
         className={twMerge(
-          "pointer-events-none fixed bottom-0 right-0 z-10 h-screen w-screen bg-black transition-all dark:invert",
+          "pointer-events-none fixed bottom-0 right-0 z-10 h-screen w-screen bg-black transition-all",
           visible ? "translate-y-[0%]" : "translate-y-[100%]"
         )}
       ></div>
