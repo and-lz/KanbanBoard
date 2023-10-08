@@ -1,4 +1,4 @@
-import { useTaskManager } from "../../../hooks/useManageTask";
+import { useTaskManager } from "../../../hooks/useTaskManager";
 import { Task } from "../../../services/types";
 import TextButton from "../../TextButton/TextButton";
 

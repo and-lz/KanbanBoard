@@ -28,6 +28,7 @@ function Card(props: Props) {
         <button
           className="cursor-pointer focus:outline-none w-full text-left"
           onClick={() => setEditMode(true)}
+          title="Editar"
         >
           <span className="text-lg font-bold mb-3 block">{titulo}</span>
           <p className="text-sm opacity-60">{conteudo}</p>

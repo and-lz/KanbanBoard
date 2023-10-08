@@ -1,4 +1,4 @@
-import { useTaskManager } from "../../../hooks/useManageTask";
+import { useTaskManager } from "../../../hooks/useTaskManager";
 import { List, Task } from "../../../services/types";
 
 interface Props {

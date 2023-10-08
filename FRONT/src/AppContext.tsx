@@ -13,11 +13,13 @@ import { Task } from "./domain/tasks/services/types";
 
 export interface AppContext {
   tasks: Task[];
+  toast?: string;
   update: (context: Partial<Omit<AppContext, "update">>) => void;
 }
 
 let initialContext: AppContext = {
   tasks: [],
+  toast: "",
   update: () => {},
 };
 
