@@ -33,5 +33,14 @@ export function useDragAndDrop() {
       moveTaskToListAndIndex(task.id, targetColumn, newIndex)
     );
   }
-  return { onDrop };
+
+  function onDragStart(event: DragEvent, task: Task) {
+    event.dataTransfer!.setData("task", JSON.stringify(task));
+  }
+
+  function onDragOver(event: React.DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+  }
+
+  return { onDrop, onDragStart, onDragOver };
 }

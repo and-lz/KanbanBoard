@@ -1,13 +1,12 @@
 import React from "react";
 import { useAppContext } from "../../../../AppContext";
 import { queryClient } from "../../../../main";
-import { useTransition } from "../../hooks/useViewTransition";
-import { createTask, updateTask } from "../../services/services";
-import { List, Task } from "../../services/types";
+import { useDragAndDrop } from "../../hooks/useDragAndDrop";
+import { createTask } from "../../services/services";
+import { List } from "../../services/types";
 import Card from "../Card/Card";
 import DropArea from "../DropArea/DropArea";
 import TextButton from "../TextButton/TextButton";
-import { moveItemInArray } from "./helper";
 
 interface Props {
   title: string;
@@ -17,39 +16,8 @@ interface Props {
 
 function Column(props: Props) {
   const { id, title, showAddTaskButton = false } = props;
-  const { tasks, update } = useAppContext();
-
-  async function onDrop(
-    event: DragEvent,
-    targetColumn: string,
-    newIndex: number
-  ) {
-    const task: Task = JSON.parse(event.dataTransfer!.getData("task"));
-
-    await updateTask(task.id, {
-      ...task,
-      lista: targetColumn,
-    });
-    useTransition(() =>
-      moveTaskToListAndIndex(task.id, targetColumn, newIndex)
-    );
-  }
-
-  function moveTaskToListAndIndex(
-    id: string,
-    newColumn: string,
-    newIndex: number
-  ) {
-    let newTasks = [...tasks];
-    const index = newTasks.findIndex((todo) => todo.id === id);
-    newTasks[index].lista = newColumn;
-    moveItemInArray(newTasks, index, newIndex);
-    update({ tasks: newTasks });
-  }
-
-  function onDragStart(event: DragEvent, task: Task) {
-    event.dataTransfer!.setData("task", JSON.stringify(task));
-  }
+  const { tasks } = useAppContext();
+  const { onDrop, onDragStart, onDragOver } = useDragAndDrop();
 
   async function createNewTask(column: List) {
     await createTask(column);
@@ -59,7 +27,7 @@ function Column(props: Props) {
   return (
     <div
       className="flex-1 border-2 border-white/10 backdrop-blur-md p-4 rounded-lg shadow-inner"
-      onDragOver={(e) => e.preventDefault()}
+      onDragOver={onDragOver}
     >
       <h2 className="mb-5 overflow-auto text-center text-white text-xl -mt-10 rounded-full border-2 font-extrabold uppercase border-white/10 max-w-[max-content]  bg-white/10 backdrop-blur-3xl p-1 px-6">
         {"<"}
