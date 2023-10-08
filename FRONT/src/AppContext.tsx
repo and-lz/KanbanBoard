@@ -8,8 +8,8 @@ import {
   useState,
 } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getTasks } from "./services/services";
-import { Task } from "./services/types";
+import { getTasks } from "./domain/tasks/services/services";
+import { Task } from "./domain/tasks/services/types";
 
 export interface AppContext {
   tasks: Task[];

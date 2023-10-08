@@ -1,5 +1,5 @@
-import Column from "./components/Column/Column";
-import { List } from "./services/types";
+import Column from "./domain/tasks/components/Column/Column";
+import { List } from "./domain/tasks/services/types";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         className="mb-10 block"
       />
       <div className="flex gap-5 scroll-smooth" role="list">
-        <Column title="A fazer" id={List.ToDo} />
+        <Column title="A fazer" id={List.ToDo} showAddTaskButton />
         <Column title="Fazendo" id={List.Doing} />
         <Column title="Feito" id={List.Done} />
       </div>

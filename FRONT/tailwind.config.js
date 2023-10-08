@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'background': 'url(assets/images/background.jpg)'
+        'background': 'url(assets/images/background.jpg)',
+        'tech': 'url(https://ada-site-frontend.s3.sa-east-1.amazonaws.com/home/home-background.svg)',
+
       },
       colors: {
         ada: '#181c23',

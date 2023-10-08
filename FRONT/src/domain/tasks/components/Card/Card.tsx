@@ -1,9 +1,8 @@
 import { useId, useState } from "react";
-import { twMerge } from "tailwind-merge";
-import { Task } from "../../App";
 import { useTransition } from "../../hooks/useViewTransition";
-import EditMode from "./EditMode";
-import Navigation from "./Navigation";
+import { Task } from "../../services/types";
+import EditMode from "./EditMode/EditMode";
+import Navigation from "./Navigation/Navigation";
 
 interface Props {
   task: Task;
@@ -14,18 +13,18 @@ interface Props {
 function Card(props: Props) {
   const { task, isEditing, onDragStart } = props;
   const { titulo, conteudo } = task;
-  const [editMode, setEditMode] = useState(isEditing);
+  const [isEditMode, setEditMode] = useState(isEditing);
   return (
     <div
       id={useId()}
       draggable
       onDragStart={onDragStart}
-      className={twMerge(
+      className={
         "card min-w-[400px] cursor-grab active:animate-pulse active:cursor-grab bg-black/80 hover:bg-black rounded-lg p-3 hover:shadow-lg transition-all group text-white border-2 border-transparent focus-within:border-green"
-      )}
+      }
       style={{ viewTransitionName: "card-" + task.id }}
     >
-      {!editMode && (
+      {!isEditMode && (
         <button
           className="cursor-pointer focus:outline-none w-full text-left"
           onClick={() => setEditMode(true)}
@@ -34,13 +33,13 @@ function Card(props: Props) {
           <p className="text-sm opacity-60">{conteudo}</p>
         </button>
       )}
-      {editMode && (
+      {isEditMode && (
         <EditMode
           task={task}
           onFinishEditing={() => useTransition(() => setEditMode(false))}
         />
       )}
-      {!editMode && <Navigation task={task} />}
+      {!isEditMode && <Navigation task={task} />}
     </div>
   );
 }

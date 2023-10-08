@@ -66,7 +66,7 @@ export async function updateTask(uuid: string, body: Task) {
     Authorization: "Bearer " + token,
   };
 
-  return fetch(`${URL}/cards/${uuid}`, {
+  await fetch(`${URL}/cards/${uuid}`, {
     method: "PUT",
     headers: headersLocal,
     body: JSON.stringify(body),
@@ -81,7 +81,7 @@ export async function deleteTask(uuid: string) {
     Authorization: "Bearer " + token,
   };
 
-  return fetch(`${URL}/cards/${uuid}`, {
+  await fetch(`${URL}/cards/${uuid}`, {
     method: "DELETE",
     headers: headersLocal,
   });

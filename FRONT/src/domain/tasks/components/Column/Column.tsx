@@ -1,17 +1,18 @@
 import { flushSync } from "react-dom";
-import { useAppContext } from "../../AppContext";
+import { useAppContext } from "../../../../AppContext";
 import { useTransition } from "../../hooks/useViewTransition";
 import Card from "../Card/Card";
 import DropArea from "../DropArea/DropArea";
 import React from "react";
 import { createTask, updateTask } from "../../services/services";
 import TextButton from "../TextButton/TextButton";
-import { queryClient } from "../../main";
+import { queryClient } from "../../../../main";
 import { List, Task } from "../../services/types";
 
 interface Props {
   title: string;
   id: List;
+  showAddTaskButton?: boolean;
 }
 
 function moveItemInArray<T>(arr: T[], fromIndex: number, toIndex: number): T[] {
@@ -32,7 +33,7 @@ function moveItemInArray<T>(arr: T[], fromIndex: number, toIndex: number): T[] {
 }
 
 function Column(props: Props) {
-  const { id, title } = props;
+  const { id, title, showAddTaskButton = false } = props;
   const { tasks, update } = useAppContext();
 
   function onDrop(event: DragEvent, targetColumn: string, newIndex: number) {
@@ -67,11 +68,12 @@ function Column(props: Props) {
 
   return (
     <div
-      className="flex-1 bg-black/10 p-4 rounded-lg shadow-inner"
+      className="flex-1 border-2 border-white/10 backdrop-blur-md p-4 rounded-lg shadow-inner"
       onDragOver={(e) => e.preventDefault()}
     >
-      <h2 className="mb-5 overflow-auto text-white text-xl font-extrabold">
-        {title}
+      <h2 className="mb-5 overflow-auto text-center text-white text-xl font-extrabold uppercase">
+        {"<"}
+        {title} {"/>"}
       </h2>
       <div className="h-[70vh] overflow-auto">
         <DropArea onDrop={(e: DragEvent) => onDrop(e, id, 0)} />
@@ -88,11 +90,13 @@ function Column(props: Props) {
             </React.Fragment>
           ))}
       </div>
-      <div className="flex justify-center mt-3">
-        <TextButton onClick={() => createNewTask(id)} className="text-white">
-          Criar nova tarefa
-        </TextButton>
-      </div>
+      {showAddTaskButton && (
+        <div className="flex justify-center mt-3">
+          <TextButton onClick={() => createNewTask(id)} className="text-white">
+            Criar nova tarefa
+          </TextButton>
+        </div>
+      )}
     </div>
   );
 }
