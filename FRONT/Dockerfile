@@ -14,7 +14,7 @@ RUN npm install
 COPY ./ ./
 
 # Expose the port your frontend development server is running on (e.g., 8080)
-EXPOSE 8080
+EXPOSE 8000
 
 # Command to run the frontend development server
 CMD ["npm", "run", "dev"]

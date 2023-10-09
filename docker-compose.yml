@@ -4,7 +4,7 @@ services:
     build:
       context: ./back
     ports:
-      - "3000:3000" # Map container port 3000 to host port 3000
+      - "4000:4000" # Map container port 3000 to host port 3000
     depends_on:
       - frontend
 
@@ -12,4 +12,4 @@ services:
     build:
       context: ./FRONT
     ports:
-      - "8080:8080" # Map container port 8080 to host port 8080
+      - "8000:8000" # Map container port 8080 to host port 8080
