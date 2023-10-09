@@ -10,7 +10,7 @@ const Toast = () => {
     toast && setVisible(true);
     const timeout = setTimeout(() => {
       setVisible(false);
-    }, 5000);
+    }, 2000);
     return () => {
       clearTimeout(timeout);
     };
@@ -42,7 +42,11 @@ const Toast = () => {
           )}
         >
           <div className="flex items-center gap-2">
-            <span className="text-md">{toast}</span>
+            <span className="text-sm uppercase">
+              {"<"}
+              {toast}
+              {" />"}
+            </span>
           </div>
         </div>
       </button>

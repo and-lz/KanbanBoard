@@ -9,7 +9,7 @@ interface Props {
 
 function EditMode(props: Props) {
   const { task, onFinishEditing } = props;
-  const formRef = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const inputClasses =
     "w-full bg-white/10 p-2 rounded-lg mb-5 focus:outline-none focus:bg-white/60 focus:text-black text-sm";

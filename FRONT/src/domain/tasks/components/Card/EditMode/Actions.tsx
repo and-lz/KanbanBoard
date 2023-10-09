@@ -4,7 +4,7 @@ import TextButton from "../../TextButton/TextButton";
 
 interface Props {
   task: Task;
-  formRef: any;
+  formRef: React.RefObject<HTMLFormElement>;
   onFinishEditing: () => void;
 }
 
@@ -22,6 +22,7 @@ function Actions(props: Props) {
       </TextButton>
       <TextButton
         onClick={async () => {
+          // @ts-ignore
           const data = new FormData(formRef.current);
           await update(task.id, {
             id: task.id,
