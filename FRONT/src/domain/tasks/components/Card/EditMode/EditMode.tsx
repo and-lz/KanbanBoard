@@ -1,5 +1,5 @@
+import { Task } from "@/domain/tasks/services/types";
 import { useRef } from "react";
-import { Task } from "../../../services/types";
 import Actions from "./Actions";
 
 interface Props {

@@ -4,12 +4,13 @@ import { useAppContext } from "../../../../AppContext";
 
 const Toast = () => {
   let [visible, setVisible] = useState(true);
-  const { toast } = useAppContext();
+  const { toast, update } = useAppContext();
 
   useEffect(() => {
     toast && setVisible(true);
     const timeout = setTimeout(() => {
       setVisible(false);
+      update({ toast: "" });
     }, 2000);
     return () => {
       clearTimeout(timeout);

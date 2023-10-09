@@ -1,3 +1,4 @@
+import { useAppContext } from "../../../../../AppContext";
 import { useTaskManager } from "../../../hooks/useTaskManager";
 import { Task } from "../../../services/types";
 import TextButton from "../../TextButton/TextButton";
@@ -10,7 +11,24 @@ interface Props {
 
 function Actions(props: Props) {
   const { task, onFinishEditing, formRef } = props;
+  const { update: updateContext } = useAppContext();
   const { update, remove } = useTaskManager();
+
+  async function handleSave() {
+    const data = new FormData(formRef.current);
+    const titulo = String(data.get("titulo"));
+    const conteudo = String(data.get("conteudo"));
+
+    if (!titulo || !conteudo)
+      return updateContext({ toast: "Preencha o título e descrição." });
+
+    await update(task.id, {
+      id: task.id,
+      lista: task.lista,
+      titulo,
+      conteudo,
+    });
+  }
 
   return (
     <div className="flex justify-between">
@@ -20,19 +38,7 @@ function Actions(props: Props) {
       <TextButton onClick={() => remove(task.id)} className="mt-5">
         Apagar
       </TextButton>
-      <TextButton
-        onClick={async () => {
-          // @ts-ignore
-          const data = new FormData(formRef.current);
-          await update(task.id, {
-            id: task.id,
-            lista: task.lista,
-            titulo: String(data.get("titulo")),
-            conteudo: String(data.get("conteudo")),
-          });
-        }}
-        className="mt-5"
-      >
+      <TextButton type="button" onClick={handleSave} className="mt-5">
         Salvar
       </TextButton>
     </div>
