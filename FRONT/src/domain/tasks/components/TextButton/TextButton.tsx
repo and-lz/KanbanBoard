@@ -10,7 +10,7 @@ const TextButton = ({ children, className, ...rest }: Props) => {
   return (
     <button
       className={twMerge(
-        `uppercase whitespace-nowrap text-sm after:content-["→"] after:pl-1 hover:underline`,
+        `uppercase whitespace-nowrap text-sm after:content-["→"] after:pl-1 focus:outline-none focus:bg-green focus:text-black p-1 px-3 rounded-lg hover:bg-green hover:text-black transition-colors`,
         className
       )}
       {...rest}

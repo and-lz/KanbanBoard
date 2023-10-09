@@ -35,10 +35,7 @@ function Card(props: Props) {
         </button>
       )}
       {isEditMode && (
-        <EditMode
-          task={task}
-          onFinishEditing={() => useTransition(() => setEditMode(false))}
-        />
+        <EditMode task={task} onFinishEditing={() => setEditMode(false)} />
       )}
       {!isEditMode && <Navigation task={task} />}
     </div>

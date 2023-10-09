@@ -28,14 +28,20 @@ function Actions(props: Props) {
       titulo,
       conteudo,
     });
+
+    onFinishEditing();
   }
 
   return (
     <div className="flex justify-between">
-      <TextButton onClick={onFinishEditing} className="mt-5">
+      <TextButton type="button" onClick={onFinishEditing} className="mt-5">
         Cancelar
       </TextButton>
-      <TextButton onClick={() => remove(task.id)} className="mt-5">
+      <TextButton
+        type="button"
+        onClick={() => remove(task.id)}
+        className="mt-5"
+      >
         Apagar
       </TextButton>
       <TextButton type="button" onClick={handleSave} className="mt-5">

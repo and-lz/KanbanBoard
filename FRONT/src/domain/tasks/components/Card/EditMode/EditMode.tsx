@@ -12,7 +12,7 @@ function EditMode(props: Props) {
   const formRef = useRef<HTMLFormElement>(null);
 
   const inputClasses =
-    "w-full bg-white/10 p-2 rounded-lg mb-5 focus:outline-none focus:bg-white/60 focus:text-black text-sm";
+    "w-full bg-white/10 p-2 rounded-lg mb-5 focus:outline-none focus:bg-white focus:text-black text-sm";
   const labelClasses = "mb-1 uppercase text-sm block opacity-70";
 
   return (
