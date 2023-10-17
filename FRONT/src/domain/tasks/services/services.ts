@@ -1,88 +1,75 @@
 import { List, Task } from "./types";
 
-let token = "";
+let token: string = "";
+const URL: string = "http://localhost:4000";
 
-let URL = "http://localhost:4000";
-
-const headers = {
+const headers: Record<string, string> = {
   "Content-Type": "application/json",
   Accept: "application/json",
 };
 
-export async function getToken() {
-  if (token !== "") return;
-  const response = await fetch(`${URL}/login`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      login: "letscode",
-      senha: "lets@123",
-    }),
-  });
-  token = await response.json();
+async function getToken(): Promise<void> {
+  if (!token) {
+    const response = await fetch(`${URL}/login`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        login: "letscode",
+        senha: "lets@123",
+      }),
+    });
+    token = await response.json();
+  }
 }
 
-export async function createTask(column: List = List.ToDo) {
+async function sendAuthorizedRequest<T>(
+  path: string,
+  method: string,
+  data?: Record<string, any>
+): Promise<T> {
   await getToken();
 
-  const headersLocal = {
+  const headersLocal: Record<string, string> = {
     ...headers,
     Authorization: "Bearer " + token,
   };
 
-  const response = await fetch(`${URL}/cards`, {
-    method: "POST",
+  const requestOptions: RequestInit = {
+    method,
     headers: headersLocal,
-    body: JSON.stringify({
-      titulo: "Nova tarefa " + Date.now(),
-      conteudo: "Descrição",
-      lista: column,
-    }),
-  });
-
-  return await response.json();
-}
-
-export async function getTasks() {
-  await getToken();
-
-  const headersLocal = {
-    ...headers,
-    Authorization: "Bearer " + token,
   };
 
-  const response = await fetch(`${URL}/cards`, {
-    headers: headersLocal,
-  });
+  if (data) {
+    requestOptions.body = JSON.stringify(data);
+  }
 
-  return await response.json();
+  const response = await fetch(`${URL}/${path}`, requestOptions);
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed request: ${response.status} - ${response.statusText}`
+    );
+  }
+
+  return response.json();
 }
 
-export async function updateTask(uuid: string, body: Task) {
-  await getToken();
-
-  const headersLocal = {
-    ...headers,
-    Authorization: "Bearer " + token,
-  };
-
-  await fetch(`${URL}/cards/${uuid}`, {
-    method: "PUT",
-    headers: headersLocal,
-    body: JSON.stringify(body),
+export async function createTask(column: List = List.ToDo): Promise<any> {
+  return sendAuthorizedRequest("cards", "POST", {
+    titulo: "Nova tarefa " + Date.now(),
+    conteudo: "Descrição",
+    lista: column,
   });
 }
 
-export async function deleteTask(uuid: string) {
-  await getToken();
+export async function getTasks(): Promise<any> {
+  return sendAuthorizedRequest("cards", "GET");
+}
 
-  const headersLocal = {
-    ...headers,
-    Authorization: "Bearer " + token,
-  };
+export async function updateTask(uuid: string, body: Task): Promise<void> {
+  await sendAuthorizedRequest(`cards/${uuid}`, "PUT", body);
+}
 
-  await fetch(`${URL}/cards/${uuid}`, {
-    method: "DELETE",
-    headers: headersLocal,
-  });
+export async function deleteTask(uuid: string): Promise<void> {
+  await sendAuthorizedRequest(`cards/${uuid}`, "DELETE");
 }
